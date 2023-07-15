@@ -165,4 +165,102 @@ respuesta = saludar()
 respuesta()
 
 # Clousure
+# Genera de manera dinamica otras funciones
 
+def saludar(username):
+    mensaje = f'Hola {username}'
+    def mostrar_mensaje():
+        print(mensaje)
+
+    return mostrar_mensaje
+
+username = 'rodrigo-calle'
+respuesta = saludar(username)
+respuesta()
+
+# Decoradores
+# Es una funcion que recibe como parametro otra funcion y retorna una funcion
+
+"""
+a -> la función principal (decorador)
+b ->la función de decorar
+c -> la función decorada
+
+a(b) -> c
+"""
+
+def funcion_a(funcion_b):
+    
+    def funcion_c(*args, **kwargs):	
+        print('Nos encontramos en la función c, antes del llamado')
+        resultado = funcion_b(*args, **kwargs)
+        print('Nos encontramos en la función c, despues del llamado')
+        return resultado
+
+    return funcion_c
+
+# @funcion_a
+# def saludar_dos():
+#     print('Hola, nos encontramos en una función')
+
+# @funcion_a
+# def despedirse():
+#     print('Adios')
+
+# saludar_dos()
+# despedirse()
+
+@funcion_a
+def suma(num_uno, num_dos):
+    return num_uno + num_dos
+
+resultado = suma(10, 20)
+print(resultado)
+
+# Generadores
+# Son funciones que retornan un objeto generador
+def pares():
+    for numero in range(0, 12, 2):
+        yield numero
+        print('Hola Mundo')
+
+generador = pares()
+
+while True:
+    try:
+        print(next(generador))
+    except StopIteration:
+        print('Se terminó el generador')
+        break
+
+# llamar el generador con next()
+# print(next(generador))
+# print(next(generador))
+# print(next(generador))
+
+
+# Documentación de funciones
+# Docstring
+# __doc__ (Modulos, Clases, Métodos y Funciones)
+
+def suma_dos(numero_1, numero_2):
+    """
+    La función suma recibe dos números enteros
+
+    Argumentos:
+    numero_1 (int)
+    numero_2 (int)
+
+    Se retorna la suma de los parámetros.
+
+    >>> suma_dos(4, 5)
+    9
+
+    >>> suma_dos(10, 20)
+    30
+
+    """
+    return numero_1 + numero_2
+
+# print(suma.__doc__)
+print(help(suma_dos))
